@@ -4,7 +4,7 @@ import { app } from "../firebase/firebase.config";
 
 export const AuthContext = createContext(null);
 
-const auth = getAuth(app)
+const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
 
@@ -12,19 +12,19 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     const createUser = (email, password) => {
-        setLoading(true)
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+        setLoading(true);
+        return createUserWithEmailAndPassword(auth, email, password);
+    };
 
     const signIn = (email, password) => {
         setLoading(true);
-        return signInWithEmailAndPassword(email, password);
-    }
+        return signInWithEmailAndPassword(auth,email, password);
+    };
 
     const signOut = () =>{
         setLoading(true);
         return signOut(auth)
-    }
+    };
 
     useEffect( () => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -35,7 +35,7 @@ const AuthProvider = ({children}) => {
         return () => {
             return unsubscribe();
         }
-    }, [] )
+    }, [] );
 
     const authInfo ={
         user,
@@ -43,7 +43,7 @@ const AuthProvider = ({children}) => {
         createUser,
         signIn,
         signOut
-    }
+    };
 
     return (
         <AuthContext.Provider value={authInfo}>
