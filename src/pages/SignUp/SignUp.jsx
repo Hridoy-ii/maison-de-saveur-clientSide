@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 
 
-
-
 const SignUp = () => {
 
     const {
@@ -22,6 +20,9 @@ const SignUp = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+            })
+            .catch(error => {
+                console.error("Error:", error.message);
             })
     };
 
@@ -51,6 +52,13 @@ const SignUp = () => {
                             </div>
                             <div className="form-control">
                                 <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text" {...register("photoURL", { required: true })} placeholder="Profile Photo URL" className="input input-bordered" />
+                                {errors.photoURL && <span className="text-cyan-200">This field is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
                                 <input type="email" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" />
@@ -63,7 +71,6 @@ const SignUp = () => {
                                 <input type="password" {...register("password", {
                                     required: true,
                                     minLength: 6,
-                                    pattern: /^[A-Za-z]+$/i,
                                 })} placeholder="password" className="input input-bordered" />
                                 {errors.password?.type === 'required' && <span className="text-cyan-200">Password is required</span>}
                                 {errors.password?.type === 'minLength' && <span className="text-cyan-200">Password must be at least 6 characters</span>}
