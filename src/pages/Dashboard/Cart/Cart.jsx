@@ -37,7 +37,7 @@ const Cart = () => {
     }
     return (
         <div>
-            <div className="flex justify-evenly">
+            <div className="flex justify-evenly mb-6">
                 <h2 className="text-4xl">
                     Items: {cart.length}
                 </h2>
@@ -83,7 +83,6 @@ const Cart = () => {
                                 <td>
                                     {item.name}
                                     <br />
-                                    <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
                                 </td>
                                 <td>{item.price} $</td>
                                 <th>
