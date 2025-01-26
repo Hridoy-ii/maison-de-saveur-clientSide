@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 
 const Allusers = () => {
 
-
     const axiosSecure = useAxiosSecure();
 
     const { data: users = [], refetch } = useQuery({
@@ -17,6 +16,29 @@ const Allusers = () => {
         }
     })
 
+    const handleMakeAdmin = user =>{
+        axiosSecure.patch(`/users/admin/${user._id}`)
+        .then(res =>{
+            console.log(res.data);
+            if(res.data.modifiedCount > 0){
+                refetch();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${user.name}'s role has been updated to an Admin!`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+            
+        })
+    }
+
+
+    // to do make event handler for user management
+    // const handleManageUser = user => {
+
+    // }
 
     const handleDeleteUser = user =>{
 
@@ -30,7 +52,7 @@ const Allusers = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosSecure.delete(`/users/${users._id}`)
+                axiosSecure.delete(`/users/${user._id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             refetch();
@@ -74,10 +96,10 @@ const Allusers = () => {
                                     <td>{user.name}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <button onClick={() => handleDeleteUser(user)}
+                                        { user.role === 'admin' ? 'Admin' : <button onClick={() => handleMakeAdmin(user)}
                                             className="btn btn-lg bg-orange-600">
                                             <FaUsers className="text-white text-xl"></FaUsers>
-                                        </button>
+                                        </button>}
                                     </td>
                                     <td>
                                         <button onClick={() => handleDeleteUser(user)} 
