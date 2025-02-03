@@ -4,13 +4,14 @@ import { FiShoppingBag } from "react-icons/fi";
 import { MdListAlt, MdOutlineReviews } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
     const [cart] = useCart();
 
     // Get admin Values from the database
-    const isAdmin = true;
+    const isAdmin = useAdmin();
 
     return (
         <div className="flex">
@@ -35,7 +36,7 @@ const Dashboard = () => {
                                 <FaBookAtlas />
                                 Manage Bookings</NavLink>
                             </li>
-                            <li><NavLink to="/dashboard/allUsers">
+                            <li><NavLink to="/dashboard/users">
                                 <FaUsers />
                                 All Users</NavLink>
                             </li>
@@ -71,7 +72,7 @@ const Dashboard = () => {
 
                     <div className="divider divider-success"></div>
 
-                    <li><NavLink to="/home">
+                    <li><NavLink to="/">
                         <FaHome></FaHome>
                         Home</NavLink>
                     </li>
