@@ -1,18 +1,21 @@
-import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
-import { FaUtensils } from "react-icons/fa";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 
 const image_host_key = import.meta.env.VITE_image_upload_key;
 const image_host_api = `https://api.imgbb.com/1/upload?key=${image_host_key}`
 
+const UpdateItem = () => {
+    const { name, category, recipe, price, _id } = useLoaderData();
 
-const AddItems = () => {
     const { register, handleSubmit, reset } = useForm();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
+
+
     const onSubmit = async (data, event) => {
         event.preventDefault();
         console.log(data)
@@ -38,19 +41,19 @@ const AddItems = () => {
             console.log("after wrapping data:", menuItem);
 
             // now sending data to the backend
-            const menuRes = await axiosSecure.post('/menu', menuItem);
+            const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
             console.log(menuRes);
-            if (menuRes.data.insertedId) {
-
+            if (menuRes.data.modifiedCount > 0) {
                 // success alert
                 Swal.fire({
                     position: "center",
                     icon: "success",
-                    title: "Menu Item added successfully!",
+                    title: "Menu Item is updated successfully!",
                     showConfirmButton: false,
                     timer: 1500
                 });
-                reset();
+
+                reset()
             }
 
         }
@@ -58,9 +61,15 @@ const AddItems = () => {
 
 
     };
+
     return (
         <div>
-            <SectionTitle heading="Add Item" subHeading="What's new?"></SectionTitle>
+            <SectionTitle heading={"Update the Item"} subHeading={"must cross check before any update"}
+            >
+            </SectionTitle>
+
+            {/* form  */}
+
             <div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <label className="form-control w-full">
@@ -68,6 +77,7 @@ const AddItems = () => {
                             <span className="label-text">Recipe Name*</span>
                         </div>
                         <input type="text" placeholder="Recipe Name"
+                            defaultValue={name}
                             className="input input-bordered w-full"
                             {...register("Name", { required: true })}
                         />
@@ -80,6 +90,7 @@ const AddItems = () => {
                                 <span className="label-text">Category*</span>
                             </div>
                             <select className="select select-bordered"
+                                defaultValue={category}
                                 {...register("Category", { required: true })}>
                                 <option value="">Category</option>
                                 <option value="Salad">Salad</option>
@@ -96,6 +107,7 @@ const AddItems = () => {
                                 <span className="label-text">Price*</span>
                             </div>
                             <input type="number" placeholder="Price"
+                                defaultValue={price}
                                 className="input input-bordered w-full"
                                 {...register("Price", { required: true })}
                             />
@@ -109,6 +121,7 @@ const AddItems = () => {
                             <span className="label-text">Recipe Details*</span>
                         </div>
                         <textarea className="textarea textarea-bordered h-24" placeholder="Recipe Details"
+                            defaultValue={recipe}
                             {...register("recipe", { required: true })}
                         ></textarea>
                     </label>
@@ -118,16 +131,19 @@ const AddItems = () => {
                         <div className="label">
                             <span className="label-text">Choose a file</span>
                         </div>
-                        <input {...register("image", { required: true })} type="file" className="file-input file-input-bordered w-full max-w-xs" />
+                        <input {...register("image")}
+                            
+                            type="file" className="file-input file-input-bordered w-full max-w-xs" />
                     </label>
 
                     <button className="btn">
-                        Add Item <FaUtensils className="ml-2"></FaUtensils>
+                        Update MEnuItem
                     </button>
                 </form>
             </div>
+
         </div>
     );
 };
 
-export default AddItems;
+export default UpdateItem;

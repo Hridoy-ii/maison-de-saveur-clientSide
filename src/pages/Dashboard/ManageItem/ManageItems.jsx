@@ -2,17 +2,21 @@ import { FaRegEdit, FaTrash } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 
 const ManageItems = () => {
 
-    const [menu] = useMenu();
+    const axiosSecure = useAxiosSecure();
+
+    const [menu, , refetch] = useMenu();
 
     const handleUpdateItem = () => {
         // update item and send it to database then refetch
     }
 
-    const handleDeleteItem = ()=>{
+    const handleDeleteItem = (item)=>{
         // delete item from the database then refetch
 
         Swal.fire({
@@ -23,13 +27,22 @@ const ManageItems = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then( async (result) => {
             if (result.isConfirmed) {
+                const res = await axiosSecure.delete(`/menu/${item._id}`);
+                console.log(res.data);
+                
+                refetch();
+
                 Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
+                    position: "top-end",
+                    icon: "success",
+                    title: `${item.name} has been deleted`,
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+
+                
             }
         });
     }
@@ -78,10 +91,12 @@ const ManageItems = () => {
                                         </td>
                                         <td className="text-right">${item.price}</td>
                                         <td>
-                                            <button onClick={() => handleUpdateItem(item)}
-                                                className="btn btn-ghost btn-lg ">
-                                                <FaRegEdit className="text-white text-lg"></FaRegEdit>
-                                            </button>
+                                            <Link to={`/dashboard/updateItem/${item._id}`}>
+                                                <button onClick={() => handleUpdateItem(item)}
+                                                    className="btn btn-ghost btn-lg ">
+                                                    <FaRegEdit className="text-white text-lg"></FaRegEdit>
+                                                </button>
+                                            </Link>
                                         </td>
                                         <td>
                                             <button onClick={() => handleDeleteItem(item)}
