@@ -13,10 +13,11 @@ import Dashboard from "../Layout/Dashboard";
 import Cart from "../pages/Dashboard/Cart/Cart";
 import Allusers from "../pages/Dashboard/AllUsers/Allusers";
 import AddItems from "../pages/Dashboard/AddItems/AddItems";
-import AdminRoutes from "./AdminRoutes";
 import ManageItems from "../pages/Dashboard/ManageItem/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import AdminRoute from "./AdminRoutes";
+import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
 
 
 export const router = createBrowserRouter([
@@ -62,25 +63,33 @@ export const router = createBrowserRouter([
         path: 'payment',
         element: <Payment></Payment>
       },
+      {
+        path: 'paymentHistory',
+        element: <PaymentHistory></PaymentHistory>
+      },
 
       // admin routes
       {
         path: 'addItems',
-        element: <AdminRoutes><AddItems></AddItems></AdminRoutes>
+        element: <AdminRoute><AddItems></AddItems></AdminRoute>
       },
       {
         path: 'manageItems',
-        element: <AdminRoutes><ManageItems></ManageItems></AdminRoutes>
+        element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
       },
       {
         path: 'users',
-        element: <AdminRoutes> <Allusers></Allusers></AdminRoutes>
+        element: <AdminRoute> <Allusers></Allusers></AdminRoute>
       },
       {
         path: 'updateItem/:id',
-        element: <AdminRoutes> <UpdateItem></UpdateItem></AdminRoutes>,
+        element: <AdminRoute> <UpdateItem></UpdateItem></AdminRoute>,
         loader: ({params})=> fetch(`http://localhost:5000/menu/${params.id}`)
       },
+      {
+        path: 'users',
+        element: <AdminRoute><Allusers></Allusers></AdminRoute>
+      }
     ]
   }
 ]);

@@ -11,7 +11,9 @@ const Dashboard = () => {
     const [cart] = useCart();
 
     // Get admin Values from the database
-    const isAdmin = useAdmin();
+    const [isAdmin] = useAdmin();
+    console.log('here is the admin boss:',isAdmin);
+    
 
     return (
         <div className="flex">
@@ -59,9 +61,9 @@ const Dashboard = () => {
                                     <MdOutlineReviews />
                                     Add Review</NavLink>
                                 </li>
-                                <li><NavLink to="/dashboard/bookings">
+                                <li><NavLink to="/dashboard/paymentHistory">
                                     <MdListAlt />
-                                    My bookings</NavLink>
+                                    Payment History</NavLink>
                                 </li>
                             </>
                     }
