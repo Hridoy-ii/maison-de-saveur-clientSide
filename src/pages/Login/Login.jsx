@@ -71,7 +71,7 @@ const Login = () => {
     return (
         <>
             <Helmet>
-                <title>Bistro Boss | Login</title>
+                <title>Maison de Saveur | Login</title>
             </Helmet>
             <div className="hero bg-base-200 min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
@@ -113,8 +113,8 @@ const Login = () => {
                                 </label>
                             </div>
                         </form>
-                        
-                        <p className='text-center'><small>New here? <Link to="/signUp">Register Now</Link></small></p>
+
+                        <p className='text-center'><small>New here? <Link to="/signUp" className='font-semibold'>Register Now</Link></small></p>
                         <div>
                             <SocialLogin></SocialLogin>
                         </div>

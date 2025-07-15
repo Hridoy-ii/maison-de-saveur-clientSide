@@ -34,10 +34,6 @@ const Dashboard = () => {
                                 <FaList></FaList>
                                 Manage Items</NavLink>
                             </li>
-                            <li><NavLink to="/dashboard/manageBookings">
-                                <FaBookAtlas />
-                                Manage Bookings</NavLink>
-                            </li>
                             <li><NavLink to="/dashboard/users">
                                 <FaUsers />
                                 All Users</NavLink>
@@ -52,11 +48,7 @@ const Dashboard = () => {
                                 <li><NavLink to="/dashboard/cart">
                                     <FaShoppingCart></FaShoppingCart>
                                     My Cart ({cart.length})</NavLink>
-                                </li>
-                                <li><NavLink to="/dashboard/reservation">
-                                    <FaCalendar></FaCalendar>
-                                    Reservation</NavLink>
-                                </li>
+                                </li>                                
                                 <li><NavLink to="/dashboard/review">
                                     <MdOutlineReviews />
                                     Add Review</NavLink>

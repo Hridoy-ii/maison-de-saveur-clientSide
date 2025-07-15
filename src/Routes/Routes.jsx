@@ -18,6 +18,7 @@ import UpdateItem from "../pages/Dashboard/UpdateItem/UpdateItem";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import AdminRoute from "./AdminRoutes";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
+import AdminHome from "../pages/Dashboard/AllUsers/AdminHome/AdminHome";
 
 
 export const router = createBrowserRouter([
@@ -45,10 +46,10 @@ export const router = createBrowserRouter([
         path: 'signUp',
         element: <SignUp></SignUp>
       },
-      {
-        path: 'secret',
-        element: <PrivateRoute><Secret></Secret></PrivateRoute>
-      }
+      // {
+      //   path: 'secret',
+      //   element: <PrivateRoute><Secret></Secret></PrivateRoute>
+      // }
     ]
   },
   {
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
         element: <AdminRoute><AddItems></AddItems></AdminRoute>
       },
       {
+        path: 'adminHome',
+        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+      },
+      {
         path: 'manageItems',
         element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
       },
@@ -84,7 +89,7 @@ export const router = createBrowserRouter([
       {
         path: 'updateItem/:id',
         element: <AdminRoute> <UpdateItem></UpdateItem></AdminRoute>,
-        loader: ({params})=> fetch(`http://localhost:5000/menu/${params.id}`)
+        loader: ({ params }) => fetch(`https://bistro-boss-web-server.onrender.com/menu/${params.id}`)
       },
       {
         path: 'users',
